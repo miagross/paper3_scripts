@@ -10,7 +10,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
 
 begin
-
+;;;test
 ;;;FOR EUR, USE (:,{45:65},{45:80})
 ;;;FOR NORTH AMERICA, USE (:,{50:65},{-125:-105})
 
