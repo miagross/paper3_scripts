@@ -18,13 +18,13 @@ Seasons = (/"DJF","MAM","SON"/)
 
 var_name = "snc"
 
-ClimVar = "tas_MIN"
+ClimVar = "tas_min"
 
 ;***********************************************************
 ;;********************Set up output*************************
 ;***********************************************************
 
-plotfile = "50-99_clim_tasmin_snow_cover_3day_ave"
+plotfile = "30yr_clim_tasmin_snow_cover_3day_ave"
 wks_type = "eps"
 wks =gsn_open_wks(wks_type,plotfile)
 ;plot = new(4,graphic)			;create plot array
@@ -58,11 +58,14 @@ do iSeas=0, dimsizes(Seasons)-1
 
   ;;;READ IN TEMPERATURE DATA; EXTREMES
 
-  ExtDataDir = "/srv/ccrc/data01/z5026024/extremes_only_files/future_tas_1950-2099_clim/annual_exceedances/"
-  ;ExtDataDir = "/srv/ccrc/data01/z5026024/extremes_only_files/absolute_tas/annual_exceedances/"
-  
-  ExtData = ExtDataDir+Data+"_"+ClimVar+"_50-99_clim_1950-1979_EXTREMES_ONLY_2.5x2.5_"+Season+".nc"
+  ;ExtDataDir = "/srv/ccrc/data01/z5026024/extremes_only_files/future_tas_1950-2099_clim/annual_exceedances/"	;150 year clim
+  ExtDataDir = "/srv/ccrc/data01/z5026024/extremes_only_files/test_clims/annual_exceedances/"			;30 yr clim
+  ;ExtDataDir = "/srv/ccrc/data01/z5026024/extremes_only_files/absolute_tas/annual_exceedances/"		;absolutes
+ 
+  ;ExtData = ExtDataDir+Data+"_"+ClimVar+"_50-99_clim_1950-1979_EXTREMES_ONLY_2.5x2.5_"+Season+".nc"
+  ExtData = ExtDataDir+Data+"_"+ClimVar+"_1950-1979_EXTREMES_ONLY_test_clim_2.5x2.5_"+Season+".nc"
   ;ExtData = ExtDataDir+Data+"_"+ClimVar+"_1950-1979_EXTREMES_ONLY_2.5x2.5_"+Season+".nc"
+  
   file1 = addfile(ExtData,"r")
   ext_p1 = file1->extremes
   lats = ext_p1&lat
@@ -71,8 +74,10 @@ do iSeas=0, dimsizes(Seasons)-1
   ;print(lats)
   ;printVarSummary(temp_p1)	;shows co-ordinates if using individual grid box!
 
-  ExtData2 = ExtDataDir+Data+"_"+ClimVar+"_50-99_clim_2070-2099_EXTREMES_ONLY_2.5x2.5_"+Season+".nc"
+  ;ExtData2 = ExtDataDir+Data+"_"+ClimVar+"_50-99_clim_2070-2099_EXTREMES_ONLY_2.5x2.5_"+Season+".nc"
+  ExtData2 = ExtDataDir+Data+"_"+ClimVar+"_2070-2099_EXTREMES_ONLY_test_clim_2.5x2.5_"+Season+".nc"
   ;ExtData2 = ExtDataDir+Data+"_"+ClimVar+"_2070-2099_EXTREMES_ONLY_2.5x2.5_"+Season+".nc"
+  
   file2 = addfile(ExtData2,"r")
   ext_p2 = file2->extremes
 
@@ -446,7 +451,7 @@ gsn_text_ndc(wks,"MAM",0.5,0.72,txpres)
 gsn_text_ndc(wks,"SON",0.83,0.72,txpres)
 
 txpres@txFontHeightF = 0.015
-gsn_text_ndc(wks,"Changes in snow cover (3 day average including day of extreme - tas anom (150 yr clim) (2070-2099 - 1950-1979)",0.5,0.75,txpres)
+gsn_text_ndc(wks,"Changes in snow cover (3 day average including day of extreme - tas anom (30 yr clim) (2070-2099 - 1950-1979)",0.5,0.75,txpres)
 
 frame(wks)  
 end

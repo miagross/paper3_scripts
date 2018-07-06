@@ -9,11 +9,11 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;read-in input file
-indatadir = "/srv/ccrc/data01/z5026024/snow_cover_data/"
-indata = indatadir+"snc_day_CSIRO-Mk3-6-0_1950-2099_2.5x2.5.nc"
+indatadir = "/srv/ccrc/data01/z5026024/radiation_data/"
+indata = indatadir+"rsus_day_CanESM2_1950-2099_2.5x2.5.nc"
 ifile = addfile(indata,"r")
 
-var	= ifile->snc
+var	= ifile->rsus
 lats	= ifile->lat
 lons	= ifile->lon
 time	= ifile->time
@@ -27,7 +27,7 @@ landmask = mask(var,lsm.eq.0,False)					;mask out all ocean points from lsm
 copy_VarMeta(var,landmask)
 
 ;;;write-out netCDF file
-odir = "/srv/ccrc/data01/z5026024/snow_cover_data/snc_day_CSIRO-Mk3-6-0_1950-2099_masked_2.5x2.5.nc"
+odir = "/srv/ccrc/data01/z5026024/radiation_data/rsus_day_CanESM2_1950-2099_masked_2.5x2.5.nc"
 system("/bin/rm -f " + odir)			; remove any pre-existing file
 ofile = addfile(odir,"c")			; open output netCDF file
 ;ofile@creation_date = systemfunc("date")
@@ -36,7 +36,7 @@ ofile = addfile(odir,"c")			; open output netCDF file
 ofile->lon		= lons
 ofile->lat		= lats
 ofile->time		= time
-ofile->snc		= landmask
+ofile->rsus		= landmask
 
 ;;create global attributes
 fAtt			= True			;assign file attributes
@@ -47,4 +47,4 @@ fAtt@creation_date	= systemfunc("date")
 fileattdef(ofile, fAtt)				;copy file attributes
 
 ;;copy attributes of new variable
-filevarattdef(ofile, "snc", landmask)
+filevarattdef(ofile, "rsus", landmask)

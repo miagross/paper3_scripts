@@ -7,13 +7,13 @@
 
 declare -a Dataset=("CanESM2" "CNRM-CM5" "CSIRO-Mk3-6-0" "inmcm4" "MPI-ESM-MR")
 #declare -a Dataset=("CNRM-CM5")
-declare -a Variable=("clt")
+declare -a Variable=("snc")
 declare -a Season=("DJF" "MAM" "SON")
 
 #for iDat in "${Dataset[@]}";do
 # for iVar in "${Variable[@]}";do
-#    cdo splitseas "/srv/ccrc/data01/z5026024/cloud_cover_data/"$iVar"_day_"$iDat"_1950-2099_masked_2.5x2.5.nc" \
-#    "/srv/ccrc/data01/z5026024/cloud_cover_data/seasonal/"$iVar"_day_"$iDat"_1950-2099_2.5x2.5_"
+#    cdo splitseas "/srv/ccrc/data01/z5026024/snow_cover_data/"$iVar"_day_"$iDat"_1950-2099_masked_2.5x2.5_remapcon.nc" \
+#    "/srv/ccrc/data01/z5026024/snow_cover_data/seasonal/"$iVar"_day_"$iDat"_1950-2099_2.5x2.5_remapcon"
 # done
 #done
 
@@ -31,8 +31,8 @@ declare -a Season=("DJF" "MAM" "SON")
 for iDat in "${Dataset[@]}";do
  for iVar in "${Variable[@]}";do
   for iSeas in "${Season[@]}";do
-    cdo selyear,2070/2099 "/srv/ccrc/data01/z5026024/cloud_cover_data/seasonal/"$iVar"_day_"$iDat"_1950-2099_2.5x2.5_"$iSeas".nc" \
-    "/srv/ccrc/data01/z5026024/cloud_cover_data/split_yrs/"$iVar"_day_"$iDat"_2070-2099_2.5x2.5_"$iSeas".nc"
+    cdo selyear,1950/1979 "/srv/ccrc/data01/z5026024/snow_cover_data/seasonal/"$iVar"_day_"$iDat"_1950-2099_2.5x2.5_remapcon"$iSeas".nc" \
+    "/srv/ccrc/data01/z5026024/snow_cover_data/split_yrs/"$iVar"_day_"$iDat"_1950-1979_2.5x2.5_remapcon_"$iSeas".nc"
   done
  done
 done
